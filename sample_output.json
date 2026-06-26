@@ -1,0 +1,79 @@
+{
+  "_meta": {
+    "title": "QueueStorm Investigator — Sample API Output",
+    "generated_at": "2026-06-26T17:07:57.518Z",
+    "source_case": "SUST_Preli_Sample_Cases.json",
+    "case_id": "SAMPLE-01",
+    "case_label": "Wrong transfer with matching evidence",
+    "endpoint": "POST /analyze-ticket",
+    "note": "Actual output from running the local service against SAMPLE-01 input."
+  },
+  "input": {
+    "ticket_id": "TKT-001",
+    "complaint": "I sent 5000 taka to a wrong number around 2pm today. The number was supposed to be 01712345678 but I think I typed it wrong. The person isn't responding to my call. Please help me get my money back.",
+    "language": "en",
+    "channel": "in_app_chat",
+    "user_type": "customer",
+    "campaign_context": "boishakh_bonanza_day_1",
+    "transaction_history": [
+      {
+        "transaction_id": "TXN-9101",
+        "timestamp": "2026-04-14T14:08:22Z",
+        "type": "transfer",
+        "amount": 5000,
+        "counterparty": "+8801719876543",
+        "status": "completed"
+      },
+      {
+        "transaction_id": "TXN-9087",
+        "timestamp": "2026-04-13T18:12:00Z",
+        "type": "cash_in",
+        "amount": 10000,
+        "counterparty": "AGENT-512",
+        "status": "completed"
+      }
+    ]
+  },
+  "output": {
+    "ticket_id": "TKT-001",
+    "relevant_transaction_id": "TXN-9101",
+    "evidence_verdict": "consistent",
+    "case_type": "wrong_transfer",
+    "severity": "high",
+    "department": "dispute_resolution",
+    "agent_summary": "Case classified as wrong_transfer. Evidence verdict: consistent. Matched transaction TXN-9101.",
+    "recommended_next_action": "Verify beneficiary details and initiate dispute review per wrong-transfer policy. Do not promise reversal.",
+    "customer_reply": "We have received your report regarding a possible wrong transfer. Our dispute resolution team is reviewing the transaction details. Please contact official support if you have additional information. We cannot confirm any reversal at this stage.",
+    "human_review_required": true,
+    "confidence": 0.95,
+    "reason_codes": [
+      "intent_classified",
+      "status_match",
+      "completed_transfer_found",
+      "amount_match",
+      "type_match",
+      "time_reference",
+      "status_considered",
+      "wrong_transfer_policy",
+      "deterministic_path"
+    ]
+  },
+  "expected_output_reference": {
+    "ticket_id": "TKT-001",
+    "relevant_transaction_id": "TXN-9101",
+    "evidence_verdict": "consistent",
+    "case_type": "wrong_transfer",
+    "severity": "high",
+    "department": "dispute_resolution",
+    "agent_summary": "Customer reports sending 5000 BDT via TXN-9101 to +8801719876543, which they now believe was the wrong recipient. Recipient is unresponsive.",
+    "recommended_next_action": "Verify TXN-9101 details with the customer and initiate the wrong-transfer dispute workflow per policy.",
+    "customer_reply": "We have noted your concern about transaction TXN-9101. Please do not share your PIN or OTP with anyone. Our dispute team will review the case and contact you through official support channels.",
+    "human_review_required": true,
+    "confidence": 0.9,
+    "reason_codes": [
+      "wrong_transfer",
+      "transaction_match",
+      "dispute_initiated"
+    ]
+  }
+}
